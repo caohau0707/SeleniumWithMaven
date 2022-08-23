@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 
 public class HomePage extends Page {
@@ -17,11 +18,13 @@ public class HomePage extends Page {
 	}
 	
 	public ElementsPage clickOnElements() {
-		driver.findElement(By.xpath("//h5[text()='Elements']")).click();
+		WebElement element = driver.findElement(By.xpath("//div[@class='category-cards']/div[1]"));
+		clickOnElementByJS(element);
 		return new ElementsPage(driver);
 	}
 	public ElementsPage clickOnForms () {
-		driver.findElement(By.xpath("//h5[text()='Forms']")).click();
+		driver.findElement(By.xpath("//div[@class='category-cards']/div[2]")).click();
 		return new ElementsPage(driver);
 	}
+	
 }

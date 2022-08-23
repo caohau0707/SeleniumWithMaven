@@ -22,5 +22,13 @@ public class ElementsPage extends Page{
 		driver.findElement(By.xpath("//span[text()='Radio Button']")).click();
 		return new RadioButtonPage(driver);
 	}
+	public PracticeFormPage clickonForm() {
+		driver.findElement(By.xpath("//span[text()='Practice Form']")).click();
+		return new PracticeFormPage(driver);
+	}
+	public ButtonsPage clickonButtons() {
+		driver.findElement(By.xpath("//span[text()='Buttons']")).click();;
+		return new ButtonsPage(driver);
+	}
 
 }

@@ -1,6 +1,7 @@
      package tests;
 
-import org.junit.Assert;
+
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import pages.CheckBoxPage;
@@ -18,16 +19,15 @@ public class CheckBox extends TestCase{
 		Assert.assertFalse(checkBoxPage.observeScreen(checkBoxPage.inputCheckBoxHome));
 		checkBoxPage.clickonCheckBoxHome();
 		String textIsShow = "You have selected : home desktop notes commands documents workspace react angular veu office public private classified general downloads wordFile excelFile";
-		Assert.assertTrue(checkBoxPage.verifyCheckBoxHome(textIsShow));
-		checkBoxPage.clickIconTick();
-		Assert.assertTrue(checkBoxPage.dataDisplayed(checkBoxPage.olElement));
-		Assert.assertTrue(checkBoxPage.isCheckedAll());
-		checkBoxPage.clickOffCheckBox();
-		Assert.assertTrue(checkBoxPage.dataDisplayed(checkBoxPage.olElement));
-		System.out.println(checkBoxPage.uncheckAll());
+  //      Assert.assertTrue(checkBoxPage.(textIsShow));
+//	    checkBoxPage.clickIconTick();
+//		Assert.assertTrue(checkBoxPage.dataDisplayed(checkBoxPage.olElement));
+//		Assert.assertTrue(checkBoxPage.isCheckedAll());
+//		checkBoxPage.clickOffCheckBox();
+//		Assert.assertTrue(checkBoxPage.dataDisplayed(checkBoxPage.olElement));
+//		System.out.println(checkBoxPage.uncheckAll());
 	//	Assert.assertTrue(checkBoxPage.uncheckAll());
-		
-
+		Assert.assertEquals(checkBoxPage.getText(),textIsShow);
 		
 		
 	}

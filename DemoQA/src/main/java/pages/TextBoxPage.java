@@ -33,13 +33,5 @@ public class TextBoxPage extends Page{
 	return result;
 	
 }
-	public boolean verifyRedBorder(By locator) {
-		boolean result = false;
-		String css= driver.findElement(locator).getCssValue(".field-error");
-		if(css!= "") {
-			result = true;
-		}
-		return result;
-	}
 
 }
