@@ -12,5 +12,5 @@ public class TestBase {
 		driver.get("https://demoqa.com/");
 		driver.manage().window().maximize();
 	}
-
+	
 }

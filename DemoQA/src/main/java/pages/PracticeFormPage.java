@@ -11,43 +11,40 @@ import org.openqa.selenium.support.ui.Select;
 import junit.framework.Assert;
 
 public class PracticeFormPage extends Page {
+
 	public PracticeFormPage(WebDriver dr) {
 		super(dr);
 	}
 
-	public By lbFirstName = By.id("firstName");
-	public By lbLasttName = By.id("lastName");
-	public By lbEmail = By.id("userEmail");
-	public By radioButton = By.id("gender-radio-1");
-	public By lbMobile = By.id("userNumber");
-	public By datePicker = By.id("dateOfBirthInput");
-	public By lbsubjects = By.xpath("//div[text()='Maths']");
-	public By chbHobbies = By.id("hobbies-checkbox-1");
-	public By uppicture = By.id("uploadPicture");
-	public By lbcurrentAddress = By.id("currentAddress");
-	public By dpselectState = By.xpath("//div[text()='NCR']");
-	public By dpselectCity = By.xpath("//div[text()='Delhi']");
-	
-	public By lbTitle = By.id("example-modal-sizes-title-lg");
-	public By lblabel = By.xpath("//th[text()='Label']");
-	public By lbValue = By.xpath("//th[text()='Values']");
-	public By studentName = By.xpath("//td[text()='Student Name']");
-	public By valueStudentName = By.xpath("//td[text()='Cao Hau']");
-	
+	// public By genderElement = By.xpath("//input[@id='gender-radio-1']/..");
+	public String genderXpath = "//*[text()='{@param}']/..";
+
+	// Thanks form
+	public By valueStudentName = By.xpath("//td[text()='Student Name']/following-sibling::td");
+	public By valueStudentEmail = By.xpath("//td[text()='Student Email']/following-sibling::td");
+	public By valueGender = By.xpath("//td[text()='Gender']/following-sibling::td");
+	public By valueMobile = By.xpath("//td[text()='Mobile']/following-sibling::td");
+	public By valueDateofBirth = By.xpath("//td[text()='Date of Birth']/following-sibling::td");
+	public By valueSubjects = By.xpath("//td[text()='Subjects']/following-sibling::td");
+	public By valueHobbies = By.xpath("//td[text()='Hobbies']/following-sibling::td");
+	public By valuePicture = By.xpath("//td[text()='Picture']/following-sibling::td");
+	public By valueAddress = By.xpath("//td[text()='Address']/following-sibling::td");
+	public By valueStateandCity = By.xpath("//td[text()='State and City']/following-sibling::td");
 
 	public void inputData(String firstName, String lastName, String email, String mobile, String date, String subjects,
-			String picture, String currentAddress, String selectState, String selectCity) {
+			String picture, String currentAddress, String selectState, String selectCity, String gender) {
 //		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		driver.findElement(By.id("firstName")).sendKeys(firstName);
 		driver.findElement(By.id("lastName")).sendKeys(lastName);
 		driver.findElement(By.id("userEmail")).sendKeys(email);
-		WebElement e = driver.findElement(By.xpath("//input[@id='gender-radio-1']/.."));
+		WebElement e = driver.findElement(createXpathByText(genderXpath, gender));
 		e.click();
 		driver.findElement(By.id("userNumber")).sendKeys(mobile);
 		DatePicker(date);
+		// setWidown();
 		driver.findElement(By.id("subjectsInput")).sendKeys(subjects);
 		driver.findElement(By.id("react-select-2-option-0")).click();
-
+		
 		driver.findElement(By.xpath("//input[@id='hobbies-checkbox-1']/..")).click();
 		driver.findElement(By.id("uploadPicture")).sendKeys(picture);
 		driver.findElement(By.id("currentAddress")).sendKeys(currentAddress);
@@ -62,41 +59,26 @@ public class PracticeFormPage extends Page {
 		clickOnElementByJS(elementCity);
 	}
 
-	public void verifyDataBeforeClickSubmit(String firstName, String lastName, String email, String mobile, String date,
-			String subjects, String picture, String currentAddress, String selectState, String selectCity) {
-		Assert.assertEquals(firstName, driver.findElement(lbFirstName).getAttribute("value"));
-		Assert.assertEquals(lastName, driver.findElement(lbLasttName).getAttribute("value"));
-		Assert.assertEquals(email, driver.findElement(lbEmail).getAttribute("value"));
-		Assert.assertTrue(driver.findElement(radioButton).isSelected());
-		Assert.assertEquals(mobile, driver.findElement(lbMobile).getAttribute("value"));
-		Assert.assertEquals(date, driver.findElement(datePicker).getAttribute("value"));
-		Assert.assertEquals(subjects, driver.findElement(lbsubjects).getText());
-		Assert.assertTrue(driver.findElement(chbHobbies).isSelected());
-		//Assert.assertEquals(picture, driver.findElement(uppicture).getAttribute("value"));
-		Assert.assertEquals(currentAddress, driver.findElement(lbcurrentAddress).getAttribute("value"));
-		Assert.assertEquals(selectState, driver.findElement(dpselectState).getText());
-		Assert.assertEquals(selectCity, driver.findElement(dpselectCity).getText());
-	}
+//	public void verifyDataBeforeClickSubmit(String firstName, String lastName, String email, String mobile, String date,
+//			String subjects, String picture, String currentAddress, String selectState, String selectCity) {
+//		Assert.assertEquals(firstName, driver.findElement(lbFirstName).getAttribute("value"));
 
 	public void clickonSubmit() {
-		WebElement elementSubmit = driver.findElement(By.id("submit"));
-		clickOnElementByJS(elementSubmit);
+		driver.findElement(By.xpath("//button[@id='submit']")).submit();
+//		WebElement elementSubmit = driver.findElement(By.id("submit"));
+//		clickOnElementByJS(elementSubmit);
+
 	}
-	public void verifyDataAfterClickSubmit(String title, String label, String value, String sudentName, String valueSudentName) {
-		Assert.assertEquals(title, driver.findElement(lbTitle).getText());
-		Assert.assertEquals(label, driver.findElement(lblabel).getText());
-		Assert.assertEquals(value, driver.findElement(lbValue).getText());
-		Assert.assertEquals(sudentName, driver.findElement(studentName).getText());
-		Assert.assertEquals(valueSudentName, driver.findElement(valueStudentName).getText());
-		
+
+	public String getDataAfterSubmit(By locator) {
+
+		return driver.findElement(locator).getText();
 	}
+
 	public void clickonClose() {
 		WebElement elementClose = driver.findElement(By.id("closeLargeModal"));
 		clickOnElementByJS(elementClose);
 	}
-	
-	
-	
 
 	/**
 	 * 
@@ -123,15 +105,48 @@ public class PracticeFormPage extends Page {
 		} else {
 			newDay = day;
 		}
-		// lay xpath cua day
-		// Cach lay xpath thu 2 = (//div[contains(@class,'react-datepicker__dayreact-datepicker__day--') and text()='%s'])[1]
-		String xpathDay = String.format("(//div[@class='react-datepicker__week']/div[text()='%s'])[1]", newDay);
+		
+//		List<WebElement> dayList = driver.findElements(By.xpath("//div[@class='react-datepicker__week']/div"));
+//		int[] index = new int[2];
+//		int i = 0;
+//		for (WebElement e : dayList) {
+//			if (e.getText().equals("1")) {
+//				index[i] = dayList.indexOf(e);
+//				i++;
+//			}
+//		}
+				
+
+//		for (int k = index[0]; k < index[1] - 1; k++) {
+//			System.out.println(dayList.get(k).getAttribute("aria-label"));
+//			if (dayList.get(k).getText().equals(newDay)) {
+//				dayList.get(k).click();
+//			}
+//		}
+		// VD
+		// String a = String.format("hello %s %d", "haucao", 8) => "hello haucao 8"
+		String xpathDay = String.format("(//div[contains(@aria-label, ', %s %s')])[1]", splittedDate[1] ,newDay);
 		WebElement dayElement = driver.findElement(By.xpath(xpathDay));
-		dayElement.click();
+		dayElement.click();		
+
+		// lay xpath cua day
+		// Cach lay xpath thu 2 =
+		// (//div[contains(@class,'react-datepicker__dayreact-datepicker__day--') and
+		// text()='%s'])[1]
+//		String xpathDay = String.format("(//div[@class='react-datepicker__week']/div[text()='%s'])[1]", newDay);
+//		WebElement dayElement = driver.findElement(By.xpath(xpathDay));
+//		dayElement.click();
 	}
 
 	public void zoomout() {
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("document.body.style.zoom ='0.6'");
 	}
+
+	public By createXpathByText(String locatorXpath, String text) {
+		String elementXpath = locatorXpath.replace("{@param}", text);
+		return By.xpath(elementXpath);
+
+	}
+
 }

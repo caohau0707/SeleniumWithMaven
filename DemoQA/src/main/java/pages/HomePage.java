@@ -26,5 +26,9 @@ public class HomePage extends Page {
 		driver.findElement(By.xpath("//div[@class='category-cards']/div[2]")).click();
 		return new ElementsPage(driver);
 	}
+	public ElementsPage clickOnAlerts() {
+		driver.findElement(By.xpath("//div[@class='category-cards']/div[3]")).click();
+		return new ElementsPage(driver);
+	}
 	
 }

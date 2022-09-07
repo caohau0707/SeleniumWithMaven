@@ -27,8 +27,13 @@ public class ElementsPage extends Page{
 		return new PracticeFormPage(driver);
 	}
 	public ButtonsPage clickonButtons() {
-		driver.findElement(By.xpath("//span[text()='Buttons']")).click();;
+		driver.findElement(By.xpath("//span[text()='Buttons']")).click();
 		return new ButtonsPage(driver);
+	}
+	public BrowserWindownsPage clickOnAlerts() {
+		driver.findElement(By.xpath("//span[text()='Browser Windows']")).click();
+		return new BrowserWindownsPage(driver);
+		
 	}
 
 }
